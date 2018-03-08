@@ -1,8 +1,14 @@
-// const http = require('http');
 const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
-const routes = require('./routes');
+const mongoose = require('mongoose');
+const router = require('./router');
+
+
+/**
+ * DB Setup
+ */
+mongoose.connect('mongodb://user:user@ds259268.mlab.com:59268/lh-accountancy');
 
 
 /**
@@ -10,8 +16,8 @@ const routes = require('./routes');
  */
 const app = express();
 app.use(morgan('combined'));
-app.use(bodyParser.json({ type: '*/*' }));
-routes(app);
+app.use(bodyParser.json());
+router(app);
 
 
 /** 

@@ -4,10 +4,14 @@ exports.signup = function(req, res, next) {
    const email = req.body.email,
       password = req.body.password;
 
-   User.findOne({ email: email }, function(err, user) {
-      if (err) { return next(err); }
+   if(!email || !password) {
+      return res.status(422).send({ error: 'Please provide email and password!'});
+   }
 
-      if (user) {
+   User.findOne({ email: email }, function(err, user) {
+      if(err) { return next(err); }
+
+      if(user) {
          return res.status(422).send({ error: 'Email is in use!' });
       }
 

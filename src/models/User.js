@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const bcrypt = require('bcrypt-nodejs');
 
 // Define our model
 const userSchema = new mongoose.Schema({
@@ -7,6 +7,12 @@ const userSchema = new mongoose.Schema({
    password: String
 }, {
    collection: 'Users'
+});
+
+// On-save Hook: encrypt password
+userSchema.pre('save', function(next) {
+   console.log( 'pre-save' );
+
 });
 
 // Create the model class

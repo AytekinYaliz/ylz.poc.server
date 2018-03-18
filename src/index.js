@@ -8,7 +8,7 @@ const router = require('./router');
 /**
  * DB Setup
  */
-mongoose.connect('mongodb://user:user@ds259268.mlab.com:59268/lh-accountancy');
+// mongoose.connect('mongodb://user:user@ds259268.mlab.com:59268/lh-accountancy');
 
 
 /**

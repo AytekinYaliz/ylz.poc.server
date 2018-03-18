@@ -10,7 +10,9 @@ const userSchema = new mongoose.Schema({
    collection: 'Users'
 });
 
-// On-save Hook: encrypt password
+/**
+ * On-save Hook: encrypt password
+ */
 userSchema.pre('save', async function(next) {
    const user = this;   // this: the user model
 
@@ -27,6 +29,34 @@ userSchema.pre('save', async function(next) {
       return next(err);
    }
 });
+
+// TODO: convert to async
+userSchema.methods.comparePassword = async function(candidatePassword, callback) {
+   try {
+      const isSame = await 
+
+      if(!err) { return done(null, false); }
+
+      // compare passwords - is 'password' === user.password
+      user.comparePassword(email, callback(err, isMatch) { 
+         if(err) { return done(err); }
+
+         return done(null, user);
+         
+      });
+      
+   } catch(err) {
+      return callback(err);
+   }
+
+   // bcrypt.compare(candidatePassword, this.password, function(err, isSame) {
+   //    if(err) { return callback(err); }
+   //
+   //    if(!err) { return done(null, false); }
+   //
+   //    callback(null, isMatch);
+   // });
+};
 
 // Create the model class
 const model = mongoose.model('User', userSchema);

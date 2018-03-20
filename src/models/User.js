@@ -30,32 +30,9 @@ userSchema.pre('save', async function(next) {
    }
 });
 
-// TODO: convert to async
-userSchema.methods.comparePassword = async function(candidatePassword, callback) {
-   try {
-      const isSame = await 
 
-      if(!err) { return done(null, false); }
-
-      // compare passwords - is 'password' === user.password
-      user.comparePassword(email, callback(err, isMatch) { 
-         if(err) { return done(err); }
-
-         return done(null, user);
-         
-      });
-      
-   } catch(err) {
-      return callback(err);
-   }
-
-   // bcrypt.compare(candidatePassword, this.password, function(err, isSame) {
-   //    if(err) { return callback(err); }
-   //
-   //    if(!err) { return done(null, false); }
-   //
-   //    callback(null, isMatch);
-   // });
+userSchema.methods.comparePasswordAsync = async function(candidatePassword) {
+   return await bcrypt.compare(candidatePassword, this.password);
 };
 
 // Create the model class
@@ -78,3 +55,10 @@ module.exports = model;
 //    });
 // });
 //});
+//
+// userSchema.methods.comparePassword = function(candidatePassword, callback) {
+//    bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
+//       if(err) { return callback(err); }
+//       callback(null, isMatch);
+//    });
+// };

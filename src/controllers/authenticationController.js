@@ -4,24 +4,15 @@ const User = require('../models/User');
 
 
 /**
- * Encodes userId (Subject) and IssuedAtTime w/ the secret
- * @param {User model} user 
- */
-function tokenForUser(user) {
-   return jwt.encode({ sub: user.id, iat: Date.now() }, config.secret);
-}
-
-
-/**
  * /signup
  */
 exports.signup = async function(req, res, next) {
    const email = req.body.email,
       password = req.body.password;
 
-   // if(!email || !password) {
-   //    return res.status(422).send({ error: 'Please provide email and password!'});
-   // }
+   if(!email || !password) {
+      return res.status(422).send({ error: 'Please provide email and password!'});
+   }
 
    try {
       // generate a salt and then run callback
@@ -38,8 +29,27 @@ exports.signup = async function(req, res, next) {
 
       await newUser.save();
 
-      res.json({ token: tokenForUser(user) });
+      res.json({ token: tokenForUser(newUser) });
    } catch(err) {
       return next(err);
    }
+}
+
+
+/**
+ * /signin
+ */
+exports.signin = function(req, res, next) {
+   // User has already had their email & password auth'd 
+   // We just need to give them a token
+   res.send({ token: tokenForUser(req.user) });
+};
+
+
+/**
+ * Encodes userId (Subject) and IssuedAtTime w/ the secret
+ * @param {User model} user 
+ */
+function tokenForUser(user) {
+   return jwt.encode({ sub: user.id, iat: Date.now() }, config.secret);
 }

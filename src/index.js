@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const router = require('./router');
 
+// const newrelic = require('newrelic');
+
 
 /**
  * DB Setup

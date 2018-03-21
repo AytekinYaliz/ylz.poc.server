@@ -9,15 +9,16 @@ function promiseWrapper(promise) {
 exports.test = async function(req, res, next) {
 
    const prom1 = new Promise((resolve, reject) => { setTimeout(resolve, 100, 'prom1') });
-   const prom2 = new Promise((resolve, reject) => { setTimeout(reject, 5000, 'prom22') });
+   const prom2 = new Promise((resolve, reject) => { setTimeout(reject, 2000, 'prom22') });
 
    Promise.all([
       new promiseWrapper(prom1),
-      new promiseWrapper(prom2)
+      new promiseWrapper(prom2),
+      Promise.resolve('nooo')
    ]).then(r => {
-      console.log( r );
+      console.log('SUCCESS: ', r );
    }).catch(e => {
-      console.log( e );
+      console.log('ERR: ', e );
    });
 
    res.json({ name: 'ayt' });

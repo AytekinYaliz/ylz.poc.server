@@ -7,6 +7,8 @@ const User = require('../models/User');
  * /signup
  */
 exports.signup = async function(req, res, next) {
+   console.log('/signup');
+   
    const email = req.body.email,
       password = req.body.password;
 
@@ -40,6 +42,8 @@ exports.signup = async function(req, res, next) {
  * /signin
  */
 exports.signin = function(req, res, next) {
+   console.log('/signin');
+   
    // User has already had their email & password auth'd 
    // We just need to give them a token
    res.send({ token: tokenForUser(req.user) });

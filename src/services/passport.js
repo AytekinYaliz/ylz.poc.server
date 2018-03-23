@@ -2,7 +2,7 @@
  * PASSPORT: used to authenticate a user when they navigate a route that requires authenticaton
  * STRATEGY: a method in passport to authenticate a user
  *    strategy 1: verify user w/ a JWT
- *    strategy 2: verify user w/ a username and password 
+ *    strategy 2: verify user w/ a username and password
  */
 const passport = require('passport');
 const JwtStrategy = require('passport-jwt').Strategy;
@@ -26,18 +26,10 @@ const localLogin = new LocalStrategy(localOptions, async function(email, passwor
 
       if(!user) { return done(null, false); }
 
-      // // w/ callback
-      // user.comparePassword(password, function(err, isMatch) {
-      //    if(err) { return done(err); }
-      //    return isMatch 
-      //       ? done(null, user) 
-      //       : done(null, false);
-      // });
-
       // w/ async
       const isMatch = await user.comparePasswordAsync(password);
-      return isMatch 
-         ? done(null, user) 
+      return isMatch
+         ? done(null, user)
          : done(null, false);
    } catch(err) {
       return done(err);
@@ -54,7 +46,7 @@ const jwtOptions = {
    secretOrKey: config.secret
 };
  const jwtLogin = new JwtStrategy(jwtOptions, async function(payload, done) {
-   // see if the user ID in the payload exists in our DB 
+   // see if the user ID in the payload exists in our DB
    // If it does, call done w/ a user object
    // otherwise, call done w/o a user object
    try {

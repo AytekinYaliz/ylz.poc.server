@@ -4,8 +4,6 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const router = require('./router');
 
-// const newrelic = require('newrelic');
-
 
 /**
  * DB Setup
@@ -23,7 +21,7 @@ app.use(bodyParser.json());
 router(app);
 
 
-/** 
+/**
  * Server Setup
  * */
 const port = process.env.port || 3001;

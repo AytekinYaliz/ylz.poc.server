@@ -2,7 +2,9 @@ const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const router = require('./router');
+const config = require('./config');
 
 
 /**
@@ -16,8 +18,13 @@ mongoose.connect('mongodb://localhost:27017/lh-accountancy');
  * App Setup
  */
 const app = express();
-app.use(morgan('combined'));
 app.use(bodyParser.json());
+app.use(morgan('combined'));
+app.use(cors({
+   origin: JSON.parse(config.corsOrigin),
+   // credentials: true,
+   optionsSuccessStatus: 200
+}));
 router(app);
 
 

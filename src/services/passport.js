@@ -26,7 +26,6 @@ const localLogin = new LocalStrategy(localOptions, async function(email, passwor
 
       if(!user) { return done(null, false); }
 
-      // w/ async
       const isMatch = await user.comparePasswordAsync(password);
       return isMatch
          ? done(null, user)

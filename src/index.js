@@ -1,37 +1,16 @@
-const express = require('express');
-const morgan = require('morgan');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const router = require('./router');
 const config = require('./config');
+const app = require('./app');
 
 
-/**
- * DB Setup
- */
-// mongoose.connect('mongodb://user:user@ds259268.mlab.com:59268/lh-accountancy');
-mongoose.connect('mongodb://localhost:27017/lh-accountancy');
+const port = config.port || 3001;
 
+const server = app.listen(port, function() {
+   const ann = `| App is running at port '${port}' in '${app.get("env")}' mode |`;
 
-/**
- * App Setup
- */
-const app = express();
-app.use(bodyParser.json());
-app.use(morgan('combined'));
-app.use(cors({
-   origin: JSON.parse(config.corsOrigin),
-   // credentials: true,
-   optionsSuccessStatus: 200
-}));
-router(app);
-
-
-/**
- * Server Setup
- * */
-const port = process.env.port || 3001;
-app.listen(port, function() {
-   console.log(`Server listening on port ${port}...`);
+   console.log(ann.replace(/[^]/g, "-"));
+   console.log(ann);
+   console.log(ann.replace(/[^]/g, "-"));
+   console.log("Press CTRL-C to stop\n");
 });
+
+module.exports = server;

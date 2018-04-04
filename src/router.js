@@ -12,8 +12,6 @@ module.exports = function(app) {
    app.get('/test', test1, test2, test3, testController.test);
 
    app.get('/', requireAuth, function(req, res) {
-      console.log('route for /');
-      
       res.send({ hi: 'there' });
    });
 

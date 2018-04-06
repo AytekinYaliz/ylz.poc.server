@@ -17,7 +17,9 @@ const config = require('../config');
  * Create local strategy
  *    done: this callback is supplied by passport. Passport assigns user model to req.user
  */
-const localOptions = { usernameField: 'email' };
+const localOptions = {
+   usernameField: 'email'
+};
 const localLogin = new LocalStrategy(localOptions, async function(email, password, done) {
    // Verify this username and pasword, call done w/ the user
    // if it the correct email and password. Otherwise, call done w/ false
@@ -59,6 +61,7 @@ const jwtOptions = {
    }
 });
 
-// Tell passport to use this strategy
+
+// Tell passport to use these strategies
 passport.use(jwtLogin);
 passport.use(localLogin);

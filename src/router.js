@@ -1,7 +1,10 @@
-const testController = require('./controllers/testController');
-const authenticationController = require('./controllers/authenticationController');
 const passport = require('passport');
 const passportService = require('./services/passport');
+
+const authenticationController = require('./controllers/authenticationController');
+const customersController = require('./controllers/customersController');
+const testController = require('./controllers/testController');
+
 
 
 // default is cookie based session.
@@ -14,8 +17,9 @@ module.exports = function(app) {
    });
    app.get('/test', test1, test2, test3, testController.test);
 
-   app.post('/signup', authenticationController.signup);
-   app.post('/signin', requireSignin, authenticationController.signin);
+   app.post('/login', requireSignin, authenticationController.login);
+   app.post('/register', authenticationController.register);
+   app.get('/customers', customersController.getAll);
 }
 
 

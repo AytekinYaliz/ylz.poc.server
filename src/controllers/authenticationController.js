@@ -5,11 +5,9 @@ const { HttpStatusCode } = require('../libs/constants');
 
 
 /**
- * /signup
+ * /register
  */
-exports.signup = async function(req, res, next) {
-   console.log('/signup');
-
+exports.register = async function(req, res, next) {
    const email = req.body.email,
       password = req.body.password;
 
@@ -42,11 +40,9 @@ exports.signup = async function(req, res, next) {
 
 
 /**
- * /signin
+ * /login
  */
-exports.signin = function(req, res, next) {
-   console.log('/signin');
-
+exports.login = function(req, res, next) {
    // User has already had their email & password auth'd
    // We just need to give them a token
    res.send({ token: tokenForUser(req.user) });

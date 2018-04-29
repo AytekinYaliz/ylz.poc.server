@@ -1,9 +1,9 @@
 const passport = require('passport');
 const passportService = require('./services/passport');
 
-const authenticationController = require('./controllers/authenticationController');
-const customersController = require('./controllers/customersController');
-const testController = require('./controllers/testController');
+const authenticationController = require('./controllers/authentication');
+const customersController = require('./controllers/customers');
+const testController = require('./controllers/test');
 
 
 // default is cookie based session.

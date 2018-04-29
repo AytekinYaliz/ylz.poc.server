@@ -1,22 +1,18 @@
-const jwt = require('jwt-simple');
-const config = require('../config');
-const User = require('../models/User');
-const { HttpStatusCode } = require('../libs/constants');
-
+const customersRepo = require('../repositories/customers');
 
 /**
- * /customers
+ * GET /customers
  */
 exports.getAll = async function(req, res, next) {
    try {
-      const customers = [
+      // res.json(await customersRepo.getAll());
+      res.json([
          {id: 123, firstName: 'aytekin', lastName: 'yaliz'},
          {id: 334, firstName: 'asiye', lastName: 'yaliz'},
          {id: 234, firstName: 'omer faruk', lastName: 'yaliz'},
          {id: 655, firstName: 'yahya selim', lastName: 'yaliz'}
-      ];
+      ]);
 
-      res.json(customers);
    } catch(err) {
       return next(err);
    }

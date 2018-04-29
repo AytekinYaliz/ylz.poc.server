@@ -21,8 +21,8 @@ const customerSchema = new mongoose.Schema({
    versionKey: false
 });
 
-userSchema.methods.comparePasswordAsync = async function(candidatePassword) {
+customerSchema.methods.comparePasswordAsync = async function(candidatePassword) {
    return await bcrypt.compare(candidatePassword, this.password);
 };
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('Customer', customerSchema);

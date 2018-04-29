@@ -6,32 +6,22 @@ const customersController = require('./controllers/customersController');
 const testController = require('./controllers/testController');
 
 
-
 // default is cookie based session.
-const requireAuth = passport.authenticate('jwt', { session: false });
 const requireSignin = passport.authenticate('local', { session: false });
+const requireAuth = passport.authenticate('jwt', { session: false });
 
 module.exports = function(app) {
    app.get('/', requireAuth, function(req, res) {
       res.send({ hi: 'there' });
    });
-   app.get('/test', test1, test2, test3, testController.test);
+   app.get('/test', testMiddleware, testMiddleware, testController.test);
 
    app.post('/login', requireSignin, authenticationController.login);
    app.post('/register', authenticationController.register);
-   app.get('/customers', customersController.getAll);
+   app.post('/changePassword', requireAuth, authenticationController.changePassword);
+   app.get('/customers', requireAuth, customersController.getAll);
 }
 
-
-function test1(req, res, next) {
-   console.log('a');
-   next();
-}
-function test2(req, res, next) {
-   console.log('b');
-   next();
-}
-function test3(req, res, next) {
-   console.log('c');
+function testMiddleware(req, res, next) {
    next();
 }

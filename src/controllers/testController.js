@@ -7,7 +7,6 @@ function promiseWrapper(promise) {
 }
 
 exports.test = async function(req, res, next) {
-
    const prom1 = new Promise((resolve, reject) => { setTimeout(resolve, 100, 'prom1') });
    const prom2 = new Promise((resolve, reject) => { setTimeout(reject, 2000, 'prom22') });
 

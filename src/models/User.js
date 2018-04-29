@@ -4,17 +4,32 @@ const bcrypt = require('bcrypt');
 
 // Define our model
 const userSchema = new mongoose.Schema({
-   email: { type: String, unique: true, lowercase: true, required: true },
-   password: { type: String, required: true }
+   email: { type: String, required: true, unique: true, lowercase: true },
+   password: { type: String, required: true },
+   firstName: { type: String, required: true },
+   lastName: { type: String, required: true },
+   isDeleted: { type: Boolean, required: true, default: () => false },
+   createDate: {
+      type: Date,
+      required: true,
+      default: () => Date.now()
+   },
+   updateDate: {
+      type: Date,
+      required: true,
+      default: () => Date.now()
+   }
 }, {
-   collection: 'Users'
+   collection: 'Users',
+   versionKey: false
 });
+userSchema.index({ email: 1 }, { unique: true });
 
 /**
  * On-save Hook: encrypt password
  */
 userSchema.pre('save', async function(next) {
-   const user = this;   // this: the user model
+   const user = this;
 
    try {
       // generate a salt and then run callback
@@ -30,35 +45,9 @@ userSchema.pre('save', async function(next) {
    }
 });
 
-
 userSchema.methods.comparePasswordAsync = async function(candidatePassword) {
    return await bcrypt.compare(candidatePassword, this.password);
 };
 
 // Create the model class
-const model = mongoose.model('User', userSchema);
-
-module.exports = model;
-
-
-
-
-//userSchema.pre('save', async function(next) {
-// bcrypt.genSalt(10, function(err, salt) {
-//    if(err) { return next(err); }
-//
-//    bcrypt.hash(user.password, salt, null, function(err, hash) {
-//       if(err) { return next(err); }
-//
-//       user.password = hash;
-//       next();
-//    });
-// });
-//});
-//
-// userSchema.methods.comparePassword = function(candidatePassword, callback) {
-//    bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
-//       if(err) { return callback(err); }
-//       callback(null, isMatch);
-//    });
-// };
+module.exports = mongoose.model('User', userSchema);

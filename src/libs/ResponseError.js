@@ -1,4 +1,4 @@
 
-exports.ResponseError = function(message) {
-   this.error = { message };
+exports.ResponseError = function(error) {
+   this.error = error;
 }

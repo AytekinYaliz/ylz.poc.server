@@ -8,13 +8,6 @@ const { HttpStatusCode } = require('../libs/constants');
  * /customers
  */
 exports.getAll = async function(req, res, next) {
-   const token = req.get('authorization');
-
-   if(!token) {
-      return res.status(HttpStatusCode.Forbidden)
-         .send({ error: 'Please provide a token!'});
-   }
-
    try {
       const customers = [
          {id: 123, firstName: 'aytekin', lastName: 'yaliz'},
@@ -28,4 +21,3 @@ exports.getAll = async function(req, res, next) {
       return next(err);
    }
 }
-

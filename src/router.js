@@ -11,17 +11,11 @@ const requireSignin = passport.authenticate('local', { session: false });
 const requireAuth = passport.authenticate('jwt', { session: false });
 
 module.exports = function(app) {
-   app.get('/', requireAuth, function(req, res) {
-      res.send({ hi: 'there' });
-   });
-   app.get('/test', testMiddleware, testMiddleware, testController.test);
+   app.get('/', requireAuth, (req, res) => res.send({ hi: 'there' }) );
 
    app.post('/login', requireSignin, authenticationController.login);
    app.post('/register', authenticationController.register);
    app.post('/changePassword', requireAuth, authenticationController.changePassword);
-   app.get('/customers', requireAuth, customersController.getAll);
-}
 
-function testMiddleware(req, res, next) {
-   next();
+   app.use('/customers', requireAuth, customersController.router);
 }

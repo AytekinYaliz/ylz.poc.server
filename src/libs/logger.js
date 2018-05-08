@@ -1,11 +1,11 @@
-export function log(value: any) {
+exports.log = function(value) {
    console.log(value);
 }
 
-export function info(value: any) {
+exports.info = function(value) {
    console.info(value);
 }
 
-export function error(value: any) {
+exports.error = function(value) {
    console.error(value);
 }

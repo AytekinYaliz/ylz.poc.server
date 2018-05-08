@@ -4,7 +4,6 @@ const customersRepo = require('../repositories/customers');
 // const namor = require('namor');
 
 
-
 exports.router = express.Router()
    .get('/', getAll)
    .delete('/:customerId', deleteCustomer)
@@ -26,6 +25,7 @@ const customers = [
 async function getAll(req, res, next) {
    try {
       // res.json(await customersRepo.getAll());
+
       res.json(customers);
    } catch(err) {
       return next(err);

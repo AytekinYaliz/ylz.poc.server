@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
-
-const { BaseModel } = require('./BaseModel');
 const invoicesRepo = require('../repositories/invoices');
+
 
 // Define our model
 const invoiceSchema = new mongoose.Schema({
@@ -28,9 +27,14 @@ invoiceSchema.pre('save', (next: any) => {
 
 module.exports = mongoose.model('Invoice', invoiceSchema);
 
-export interface Invoice extends BaseModel {
-   _id: number;
-   firstName: string;
-   lastName: string;
-   isDeleted: boolean;
-};
+// export type Invoice {
+//    _id: number;
+//    firstName: string;
+//    lastName: string;
+//    isDeleted: boolean;
+
+//    createDate: Date;
+//    cretedBy: string;
+//    updateDate: Date;
+//    updatedBy: string;
+// };

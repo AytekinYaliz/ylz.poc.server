@@ -10,7 +10,7 @@ exports.getAll = async function() {
    return await Customer.find();
 }
 
-exports.insertOne = async function(customer: any, userId: string): Promise<any> {
+exports.insertOne = async function(customer, userId) {
    try {
       const newCustomer = new Customer({
          ...customer,

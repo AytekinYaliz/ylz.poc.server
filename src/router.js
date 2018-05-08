@@ -17,5 +17,5 @@ module.exports = function(app) {
    app.post('/register', authenticationController.register);
    app.post('/changePassword', requireAuth, authenticationController.changePassword);
 
-   app.use('/customers', requireAuth, customersController.router);
+   app.use('/customers', customersController.router);
 }

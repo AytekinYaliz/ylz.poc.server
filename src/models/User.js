@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const { BaseModel } = require('./BaseModel');
+
 
 const roleSchema = new mongoose.Schema({
    name: { type: String, required: true }
@@ -26,11 +26,10 @@ const userSchema = new mongoose.Schema({
 userSchema.index({ email: 1 }, { unique: true });
 
 
-
 /**
  * On-save Hook: encrypt password
  */
-userSchema.pre('save', async (next: any) => {
+userSchema.pre('save', async function (next) {
    // const user = this;
 
    try {
@@ -57,12 +56,12 @@ userSchema.methods.comparePasswordAsync = async function(candidatePassword) {
 module.exports = mongoose.model('User', userSchema);
 
 
-export interface User extends BaseModel {
-   _id: string;
-   email: string;
-   password: string;
-   firstName: string;
-   lastName: string;
-   roles: string[];
-   isDeleted: boolean;
-};
+// exports type User {
+//    _id: string;
+//    email: string;
+//    password: string;
+//    firstName: string;
+//    lastName: string;
+//    roles: Array<string>;
+//    isDeleted: boolean;
+// };

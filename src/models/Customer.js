@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { BaseModel } = require('./BaseModel');
+
 
 // Define our model
 const customerSchema = new mongoose.Schema({
@@ -16,7 +16,7 @@ const customerSchema = new mongoose.Schema({
    versionKey: false
 });
 
-customerSchema.pre('save', (next: any) => {
+customerSchema.pre('save', next => {
    this.updateDate = Date.now();
    next();
 });
@@ -27,8 +27,13 @@ customerSchema.methods.comparePasswordAsync = async function(candidatePassword) 
 
 module.exports = mongoose.model('Customer', customerSchema);
 
-export interface Customer extends BaseModel {
-   _id: string;
-   name: string;
-   industry: string;
-};
+// export type Customer {
+//    _id: string;
+//    name: string;
+//    industry: string;
+
+//    createDate: Date;
+//    cretedBy: string;
+//    updateDate: Date;
+//    updatedBy: string;
+// };

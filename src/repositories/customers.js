@@ -1,36 +1,29 @@
 const Customer = require('../models/Customer');
+const logger = require('../libs/logger');
 
 
-exports.getById = async function(customerId) {
-   return await Customer.findById(customerId);
+exports.getById = async function(id) {
+   return await Customer.findById(id);
 }
 
 exports.getAll = async function() {
-   return await Customer.find({});
+   return await Customer.find();
 }
 
-// exports.insert = async function(user) {
-//    try {
-//       const newUser = new User(user);
+exports.insertOne = async function(customer: any, userId: string): Promise<any> {
+   try {
+      const newCustomer = new Customer({
+         ...customer,
+         createdBy: userId,
+         updatedBy: userId
+      });
 
-//       return await newUser.save();
-//    } catch (err) {
-//       if(err.code === 11000) {
-//          console.log('11000 duplicate key error collection: ' + JSON.stringify(user));
-//          throw Error('Email in use');
-//       }
-//       throw err;
-//    }
-// }
-
-// exports.update = async function(user) {
-//    try {
-//       return await user.save();
-//    } catch (err) {
-//       if(err.code === 11000) {
-//          console.log('11000 duplicate key error collection: ' + JSON.stringify(user));
-//          throw Error('Email in use');
-//       }
-//       throw err;
-//    }
-// }
+      return await newCustomer.save();
+   } catch (err) {
+      if(err.code === 11000) {
+         logger.warn("11000 duplicate key error collection: " + JSON.stringify(customer));
+      } else {
+         logger.error(err);
+      }
+   }
+}

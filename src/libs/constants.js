@@ -17,3 +17,17 @@ exports.HttpStatusCode = {
    UnprocessableEntity: 422,
    InternalServerError: 500
 }
+
+exports.RoleType = {
+   admin: 'admin',
+   manager: 'manager',
+   user: 'user'
+};
+exports.BranchType = {
+   Tooting: 1,
+   Croydon: 2,
+   Welling: 3,
+   Kent: 4,
+   Surrey: 5,
+   Chattem: 6
+};

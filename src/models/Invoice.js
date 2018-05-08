@@ -1,8 +1,11 @@
 const mongoose = require('mongoose');
+
 const { BaseModel } = require('./BaseModel');
+const invoicesRepo = require('../repositories/invoices');
 
 // Define our model
-const customerSchema = new mongoose.Schema({
+const invoiceSchema = new mongoose.Schema({
+   _id: number,
    firstName: { type: String, required: true },
    lastName: { type: String, required: true },
    isDeleted: { type: Boolean, required: true, default: () => false },
@@ -12,23 +15,22 @@ const customerSchema = new mongoose.Schema({
    updateDate: { type: Date, required: true, default: () => Date.now() },
    updatedBy: { type: String, required: true }
 }, {
-   collection: 'Customers',
+   collection: 'Invoices',
    versionKey: false
 });
+invoiceSchema.index({ id: 1 }, { unique: true });
 
-customerSchema.pre('save', (next: any) => {
+invoiceSchema.pre('save', (next: any) => {
+   this._id = invoicesRepo.getCurrentId() + 1;
    this.updateDate = Date.now();
    next();
 });
 
-customerSchema.methods.comparePasswordAsync = async function(candidatePassword) {
-   return await bcrypt.compare(candidatePassword, this.password);
-};
+module.exports = mongoose.model('Invoice', invoiceSchema);
 
-module.exports = mongoose.model('Customer', customerSchema);
-
-export interface Customer extends BaseModel {
-   _id: string;
-   name: string;
-   industry: string;
+export interface Invoice extends BaseModel {
+   _id: number;
+   firstName: string;
+   lastName: string;
+   isDeleted: boolean;
 };

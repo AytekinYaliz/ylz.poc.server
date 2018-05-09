@@ -1,10 +1,15 @@
 const mongoose = require('mongoose');
 
 
+const phoneSchema = new mongoose.Schema({
+   phone: { type: String, required: true }
+}, { _id: false });
+
 // Define our model
 const customerSchema = new mongoose.Schema({
    firstName: { type: String, required: true },
    lastName: { type: String, required: true },
+   phones: [phoneSchema],
    isDeleted: { type: Boolean, required: true, default: () => false },
 
    createDate: { type: Date, required: true, default: () => Date.now() },

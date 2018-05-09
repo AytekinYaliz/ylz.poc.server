@@ -3,11 +3,12 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const router = require('./router');
 const config = require('./config');
+const router = require('./router');
+const utilities = require('./libs/utilities');
+const { startup } = require('./startup');
 const { DeploymentType } = require('./libs/constants');
 const { ResponseError } = require('./libs/ResponseError');
-
 
 const nodeEnv = process.env.NODE_ENV;
 
@@ -40,6 +41,11 @@ if (nodeEnv === DeploymentType.local || nodeEnv === DeploymentType.test) {
  * Controllers
  */
 router(app);
+
+/**
+ * Startup scripts
+ */
+startup(config.userName ? config.userName : 'startup')
 
 /**
  * ErrorHandler

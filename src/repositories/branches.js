@@ -9,11 +9,9 @@ exports.getAll = function() {
    return Branch.find().sort({ name: 1});
 }
 
-exports.insert = function(id, name, userId) {
-   console.log( id, name );
-
+exports.insert = function(branchId, name, userId) {
    const newBranch = new Branch({
-      _id: id,
+      _id: branchId,
       name,
       isDeleted: false,
       createdBy: userId,

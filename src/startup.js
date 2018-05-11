@@ -1,20 +1,40 @@
-const { BranchType } = require('./libs/constants');
+const { BranchType, PaymentType, PaymentReason } = require('./libs/constants');
 const customersRepo = require('./repositories/customers');
 const branchesRepo = require('./repositories/branches');
+const paymentTypesRepo = require('./repositories/paymentTypes');
+const paymentReasonsRepo = require('./repositories/paymentReasons');
 
 exports.startup = async function(userId) {
-   const numberOfCustomers = await customersRepo.getCount();
-   if(!numberOfCustomers) {
-      await customersRepo.startup(customers, userId);
-   }
-
    const numberOfBranches = await branchesRepo.getCount();
    if(!numberOfBranches) {
       const branches = [];
       Object.keys(BranchType).forEach(branchType => {
-         branches.push({ id: BranchType[branchType], name: branchType});
+         branches.push({ id: branchType, name: BranchType[branchType] });
       });
       await branchesRepo.startup(branches, userId);
+   }
+
+   const numberOfPaymentTypes = await paymentTypesRepo.getCount();
+   if(!numberOfPaymentTypes) {
+      const paymentTypes = [];
+      Object.keys(PaymentType).forEach(paymentType => {
+         paymentTypes.push({ id: paymentType, name: PaymentType[paymentType] });
+      });
+      await paymentTypesRepo.startup(paymentTypes, userId);
+   }
+
+   const numberOfPaymentReasons = await paymentReasonsRepo.getCount();
+   if(!numberOfPaymentReasons) {
+      const paymentReasons = [];
+      Object.keys(PaymentReason).forEach(paymentReason => {
+         paymentReasons.push({ id: paymentReason, name: PaymentReason[paymentReason] });
+      });
+      await paymentReasonsRepo.startup(paymentReasons, userId);
+   }
+
+   const numberOfCustomers = await customersRepo.getCount();
+   if(!numberOfCustomers) {
+      await customersRepo.startup(customers, userId);
    }
 }
 

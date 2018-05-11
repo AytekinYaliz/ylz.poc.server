@@ -32,15 +32,15 @@ exports.update = async function(invoiceId, invoice, userId) {
    return invoiceFromDB.save();
 }
 
-exports.getMaxId = async function() {
+exports.getMaxNumber = async function() {
    return new Promise((resolve, reject) => {
       Invoice
          .find()
-         .sort({ '_id': -1 })
+         .sort({ 'number': -1 })
          .limit(1)
          // .exec()
          .then(invoices => {
-            resolve(invoices[0]._id);
+            resolve(invoices[0].number);
          })
          .catch(err => {
             reject(err);

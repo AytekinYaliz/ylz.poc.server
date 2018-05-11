@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 
 // Define our model
-const branchSchema = new mongoose.Schema({
+const paymentTypeSchema = new mongoose.Schema({
    _id: String,
    name: { type: String, required: true },
    isDeleted: { type: Boolean, required: true, default: () => false },
@@ -12,15 +12,15 @@ const branchSchema = new mongoose.Schema({
    updateDate: { type: Date, required: true, default: () => Date.now() },
    updatedBy: { type: String, required: true }
 }, {
-   collection: 'Branches',
+   collection: 'PaymentTypes',
    versionKey: false
 });
-branchSchema.index({ name: 1 }, { unique: true });
+paymentTypeSchema.index({ name: 1 }, { unique: true });
 
-branchSchema.pre('save', async function (next) {
+paymentTypeSchema.pre('save', async function (next) {
    this.updateDate = Date.now();
    next();
 });
 
 // Create the model class
-module.exports = mongoose.model('Branch', branchSchema);
+module.exports = mongoose.model('PaymentType', paymentTypeSchema);

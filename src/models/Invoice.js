@@ -4,16 +4,18 @@ const invoicesRepo = require('../repositories/invoices');
 
 // Define our model
 const invoiceSchema = new mongoose.Schema({
-   _id: Number,
+   number: { type: Number, required: true },
    customerId:{ type: String, required: true },
    amount: { type: Number, required: true },
    amountInLetters: { type: Number, required: true },
-   donationData: { type: Date, required: true },
-   branchId: { type: String, required: true },
-
-   firstName: { type: String, required: true },
-   lastName: { type: String, required: true },
-   isDeleted: { type: Boolean, required: true, default: () => false },
+   date: { type: Date, required: true },
+   branch: { type: String, required: true },
+   staffId: { type: String, required: true },
+   paymentType: { type: String, required: true },
+   paymentTypeOther: { type: String, required: true },
+   paymentReason: { type: String, required: true },
+   paymentReasonOther: { type: String, required: true },
+   details: { type: String, required: true },
 
    createDate: { type: Date, required: true, default: () => Date.now() },
    createdBy: { type: String, required: true },
@@ -23,10 +25,12 @@ const invoiceSchema = new mongoose.Schema({
    collection: 'Invoices',
    versionKey: false
 });
-// invoiceSchema.index({ id: 1 }, { unique: true });
+invoiceSchema.index({ number: 1 }, { unique: true });
 
 invoiceSchema.pre('save', next => {
-   this._id = invoicesRepo.getMaxId() + 1;
+   if(!this.number) {
+      this.number = invoicesRepo.getMaxNumber() + 1;
+   }
    this.updateDate = Date.now();
    next();
 });

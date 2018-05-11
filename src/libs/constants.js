@@ -24,26 +24,26 @@ exports.RoleType = {
    user: 'user'
 };
 exports.BranchType = {
-   Tooting: 1,
-   Croydon: 2,
-   Welling: 3,
-   Kent: 4,
-   Surrey: 5,
-   Chattem: 6
+   Tooting: 'Tooting',
+   Croydon: 'Croydon',
+   Welling: 'Welling',
+   Kent: 'Kent',
+   Surrey: 'Surrey',
+   Chattem: 'Chattem'
 };
 
 exports.PaymentType = {
-   Cash: 1,
-   CreaditDebitCard: 2,
-   Cheque: 3,
-   BankTransfer: 4,
-   BankDeposit: 5,
-   Other: 6
+   Cash: 'Cash',
+   CreaditDebitCard: 'Creadit/Debit Card',
+   Cheque: 'Cheque',
+   BankTransfer: 'Bank Transfer',
+   BankDeposit: 'Bank Deposit',
+   Other: 'Other'
 };
 
 exports.PaymentReason = {
-   Donation: 1,
-   DonationBox: 2,
-   StudentFee: 3,
-   Other: 4
+   Donation: 'Donation',
+   DonationBox: 'Donation Box',
+   StudentFee: 'Student Fee',
+   Other: 'Other'
 };

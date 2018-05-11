@@ -54,14 +54,3 @@ userSchema.methods.comparePasswordAsync = async function(candidatePassword) {
 
 // Create the model class
 module.exports = mongoose.model('User', userSchema);
-
-
-// exports type User {
-//    _id: string;
-//    email: string;
-//    password: string;
-//    firstName: string;
-//    lastName: string;
-//    roles: Array<string>;
-//    isDeleted: boolean;
-// };

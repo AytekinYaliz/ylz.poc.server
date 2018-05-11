@@ -2,24 +2,48 @@ const Invoice = require('../models/Invoice');
 const logger = require('../libs/logger');
 
 
-exports.getById = async function(id) {
-   return await Invoice.findById(id);
+exports.getCount = function() {
+   return Customer.count({});
+}
+exports.getById = function(invoiceId) {
+   return Invoice.findById(invoiceId);
+}
+exports.getByCustomerId = function(customerId) {
+   return Invoice.find({ customerId });
 }
 
-exports.getAll = async function() {
-   return await Invoice.find();
+exports.insert = function(invoice, userId) {
+   const newInvoice = new Invoice({
+      ...invoice,
+      createdBy: userId,
+      updatedBy: userId
+   });
+
+   return newInvoice.save();
 }
 
-exports.getCurrentId = async function() {
-   return await Invoice
-      .find()
-      .sort({ '_id': -1 })
-      .limit(1)
-      .exec()
-      .then(invoices => {
-         return invoices[0]._id;
-       })
-       .catch(err => {
-         return 'error occured';
-       });
+exports.update = async function(invoiceId, invoice, userId) {
+   const invoiceFromDB = await getById(invoiceId);
+
+   // invoiceFromDB.firstName = invoice.XXX;
+   // invoiceFromDB.lastName = invoice.XXX;
+   invoiceFromDB.updatedBy = userId;
+
+   return invoiceFromDB.save();
+}
+
+exports.getMaxId = async function() {
+   return new Promise((resolve, reject) => {
+      Invoice
+         .find()
+         .sort({ '_id': -1 })
+         .limit(1)
+         // .exec()
+         .then(invoices => {
+            resolve(invoices[0]._id);
+         })
+         .catch(err => {
+            reject(err);
+         });
+   });
 }

@@ -9,6 +9,12 @@ const phoneSchema = new mongoose.Schema({
 const customerSchema = new mongoose.Schema({
    firstName: { type: String, required: true },
    lastName: { type: String, required: true },
+   address1: { type: String },
+   address2: { type: String },
+   town: { type: String },
+   city: { type: String },
+   postCode: { type: String },
+   email: { type: String },
    phones: [phoneSchema],
    isDeleted: { type: Boolean, required: true, default: () => false },
 
@@ -31,14 +37,3 @@ customerSchema.methods.comparePasswordAsync = async function(candidatePassword) 
 };
 
 module.exports = mongoose.model('Customer', customerSchema);
-
-// export type Customer {
-//    _id: string;
-//    name: string;
-//    industry: string;
-
-//    createDate: Date;
-//    cretedBy: string;
-//    updateDate: Date;
-//    updatedBy: string;
-// };

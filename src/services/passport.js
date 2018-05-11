@@ -58,7 +58,9 @@ const jwtStrategy = new JwtStrategy(jwtOptions, async function(payload, done) {
       const user = await User.findById(payload.sub);
 
       return user
-         ? done(null, user)
+         ? done(null, {
+            id: user._id
+         })
          : done(null, false);
    } catch(err) {
       return done(err);

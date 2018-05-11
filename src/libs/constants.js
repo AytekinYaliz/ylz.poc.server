@@ -31,3 +31,19 @@ exports.BranchType = {
    Surrey: 5,
    Chattem: 6
 };
+
+exports.PaymentType = {
+   Cash: 1,
+   CreaditDebitCard: 2,
+   Cheque: 3,
+   BankTransfer: 4,
+   BankDeposit: 5,
+   Other: 6
+};
+
+exports.PaymentReason = {
+   Donation: 1,
+   DonationBox: 2,
+   StudentFee: 3,
+   Other: 4
+};

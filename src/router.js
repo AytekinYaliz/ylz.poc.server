@@ -3,6 +3,7 @@ const passportService = require('./services/passport');
 
 const authenticationController = require('./controllers/authentication');
 const customersController = require('./controllers/customers');
+const invoicesController = require('./controllers/invoices');
 const testController = require('./controllers/test');
 
 
@@ -17,5 +18,6 @@ module.exports = function(app) {
    app.post('/register', authenticationController.register);
    app.post('/changePassword', requireAuth, authenticationController.changePassword);
 
-   app.use('/customers', customersController.router);
+   app.use('/customers', requireAuth, customersController.router);
+   app.use('/invoices', requireAuth, invoicesController.router);
 }

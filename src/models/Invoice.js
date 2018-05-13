@@ -4,22 +4,23 @@ const invoicesRepo = require('../repositories/invoices');
 
 // Define our model
 const invoiceSchema = new mongoose.Schema({
+   _id: { type: String, default: () => String(new mongoose.Types.ObjectId()) },
    number: { type: Number, required: true },
    customerId:{ type: String, required: true },
    amount: { type: Number, required: true },
-   amountInLetters: { type: Number, required: true },
+   amountInLetters: { type: String },
    date: { type: Date, required: true },
    branch: { type: String, required: true },
    staffId: { type: String, required: true },
    paymentType: { type: String, required: true },
-   paymentTypeOther: { type: String, required: true },
+   paymentTypeOther: { type: String },
    paymentReason: { type: String, required: true },
-   paymentReasonOther: { type: String, required: true },
-   details: { type: String, required: true },
+   paymentReasonOther: { type: String },
+   details: { type: String },
 
-   createDate: { type: Date, required: true, default: () => Date.now() },
+   createDate: { type: Date, required: true, default: () => new Date() },
    createdBy: { type: String, required: true },
-   updateDate: { type: Date, required: true, default: () => Date.now() },
+   updateDate: { type: Date, required: true, default: () => new Date() },
    updatedBy: { type: String, required: true }
 }, {
    collection: 'Invoices',
@@ -27,11 +28,16 @@ const invoiceSchema = new mongoose.Schema({
 });
 invoiceSchema.index({ number: 1 }, { unique: true });
 
-invoiceSchema.pre('save', next => {
-   if(!this.number) {
-      this.number = invoicesRepo.getMaxNumber() + 1;
+invoiceSchema.set('toObject', {
+   transform: (doc, ret, options) => {
+      ret.id = ret._id;
+      delete ret._id;
+      delete ret.__v;
    }
-   this.updateDate = Date.now();
+});
+
+invoiceSchema.pre('save', async next => {
+   this.updateDate = new Date();
    next();
 });
 

@@ -3,7 +3,7 @@ const logger = require('../libs/logger');
 
 
 exports.getCount = function() {
-   return Customer.count({});
+   return Invoice.count({});
 }
 exports.getById = function(invoiceId) {
    return Invoice.findById(invoiceId);
@@ -40,7 +40,7 @@ exports.getMaxNumber = async function() {
          .limit(1)
          // .exec()
          .then(invoices => {
-            resolve(invoices[0].number);
+            resolve(invoices.length ? invoices[0].number : 0);
          })
          .catch(err => {
             reject(err);

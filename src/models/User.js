@@ -8,6 +8,7 @@ const roleSchema = new mongoose.Schema({
 
 // Define our model
 const userSchema = new mongoose.Schema({
+   _id: { type: String, default: () => String(new mongoose.Types.ObjectId()) },
    email: { type: String, required: true, unique: true, lowercase: true },
    password: { type: String, required: true },
    firstName: { type: String, required: true },
@@ -15,15 +16,23 @@ const userSchema = new mongoose.Schema({
    roles: { type: [roleSchema], required: false },
    isDeleted: { type: Boolean, required: true, default: () => false },
 
-   createDate: { type: Date, required: true, default: () => Date.now() },
+   createDate: { type: Date, required: true, default: () => new Date() },
    createdBy: { type: String, required: true },
-   updateDate: { type: Date, required: true, default: () => Date.now() },
+   updateDate: { type: Date, required: true, default: () => new Date() },
    updatedBy: { type: String, required: true }
 }, {
    collection: 'Users',
    versionKey: false
 });
 userSchema.index({ email: 1 }, { unique: true });
+
+userSchema.set('toObject', {
+   transform: (doc, ret, options) => {
+      ret.id = ret._id;
+      delete ret._id;
+      delete ret.__v;
+   }
+});
 
 
 /**
@@ -40,7 +49,7 @@ userSchema.pre('save', async function (next) {
       const hash = await bcrypt.hash(this.password, salt, null);
 
       this.password = hash;
-      this.updateDate = Date.now();
+      this.updateDate = new Date();
 
       next();
    } catch(err) {

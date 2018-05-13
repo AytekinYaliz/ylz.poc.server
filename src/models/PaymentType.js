@@ -3,13 +3,13 @@ const mongoose = require('mongoose');
 
 // Define our model
 const paymentTypeSchema = new mongoose.Schema({
-   _id: String,
+   _id: { type: String, default: () => String(new mongoose.Types.ObjectId()) },
    name: { type: String, required: true },
    isDeleted: { type: Boolean, required: true, default: () => false },
 
-   createDate: { type: Date, required: true, default: () => Date.now() },
+   createDate: { type: Date, required: true, default: () => new Date() },
    createdBy: { type: String, required: true },
-   updateDate: { type: Date, required: true, default: () => Date.now() },
+   updateDate: { type: Date, required: true, default: () => new Date() },
    updatedBy: { type: String, required: true }
 }, {
    collection: 'PaymentTypes',
@@ -17,8 +17,16 @@ const paymentTypeSchema = new mongoose.Schema({
 });
 paymentTypeSchema.index({ name: 1 }, { unique: true });
 
+paymentTypeSchema.set('toObject', {
+   transform: (doc, ret, options) => {
+      ret.id = ret._id;
+      delete ret._id;
+      delete ret.__v;
+   }
+});
+
 paymentTypeSchema.pre('save', async function (next) {
-   this.updateDate = Date.now();
+   this.updateDate = new Date();
    next();
 });
 

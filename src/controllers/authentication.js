@@ -49,7 +49,7 @@ exports.register = async function(req, res, next) {
          password,
          firstName,
          lastName
-      });
+      }, email);
 
       res.json({ token: generateToken(newUser) });
    } catch(err) {

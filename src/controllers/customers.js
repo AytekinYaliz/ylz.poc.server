@@ -1,8 +1,10 @@
+const mongoose = require('mongoose');
 const express = require('express');
 const logger = require('../libs/logger');
 const { HttpStatusCode } = require('../libs/constants');
 const customersRepo = require('../repositories/customers');
 const invoicesRepo = require('../repositories/invoices');
+const usersRepo = require('../repositories/users');
 
 
 exports.router = express.Router()
@@ -20,6 +22,10 @@ exports.router = express.Router()
 async function getAll(req, res, next) {
    try {
       const customers = await customersRepo.getAll();
+
+      // console.log( String(new mongoose.Types.ObjectId()).id) );
+      // console.log( typeof new mongoose.Types.ObjectId().id );
+
 
       res.json(customers);
    } catch(err) {
@@ -103,9 +109,17 @@ async function getInvoices(req, res, next) {
    try {
       const customerId = req.params.customerId;
 
-      const invoices = await invoicesRepo.getByCustomerId(customerId);
+      const invoices = await invoicesRepo.getByCustomerId(customerId),
+         users = await usersRepo.getAll();
 
-      res.json(invoices);
+      res.json(invoices.map(invoice => {
+         const user = users.find(u => u._id.toString() === invoice.staffId);
+
+         return {
+            ...invoice.toObject(),
+            staffName: `${user.firstName} ${user.lastName}`
+         };
+      }));
    } catch(err) {
       logger.error(err);
       return next(err);

@@ -23,11 +23,7 @@ async function getAll(req, res, next) {
    try {
       const customers = await customersRepo.getAll();
 
-      // console.log( String(new mongoose.Types.ObjectId()).id) );
-      // console.log( typeof new mongoose.Types.ObjectId().id );
-
-
-      res.json(customers);
+      return res.json(customers);
    } catch(err) {
       logger.error(err);
       return next(err);
@@ -43,7 +39,7 @@ async function getOne(req, res, next) {
 
       const customer = await customersRepo.getById(customerId);
 
-      res.json(customer);
+      return res.json(customer);
    } catch(error) {
       logger.error(err);
       return next(err);
@@ -60,7 +56,7 @@ async function create(req, res, next) {
 
       await customersRepo.post(customer, userId);
 
-      res.sendStatus(HttpStatusCode.Created);
+      return res.sendStatus(HttpStatusCode.Created);
    } catch(err) {
       logger.error(err);
       return next(err);
@@ -78,7 +74,7 @@ async function update(req, res, next) {
 
       await customersRepo.update(customer, userId);
 
-      res.sendStatus();
+      return res.sendStatus();
    } catch(err) {
       logger.error(err);
       return next(err);
@@ -95,7 +91,7 @@ async function remove(req, res, next) {
 
       customersRepo.remove(customerId, userId);
 
-      res.sendStatus(HttpStatusCode.NoContent);
+      return res.sendStatus(HttpStatusCode.NoContent);
    } catch(err) {
       logger.error(err);
       return next(err);

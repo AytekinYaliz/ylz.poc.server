@@ -6,6 +6,7 @@ const cors = require('cors');
 const config = require('./config');
 const router = require('./router');
 const utilities = require('./libs/utilities');
+const logger = require('./libs/logger');
 const { startup } = require('./startup');
 const { DeploymentType } = require('./libs/constants');
 const { ResponseError } = require('./libs/ResponseError');
@@ -51,7 +52,7 @@ startup(config.userName ? config.userName : 'startup')
  * ErrorHandler
  */
 app.use((err, req, res, next) => {
-   console.error(err);
+   logger.error(err);
    return res
       .status(500)
       .send(err.message);

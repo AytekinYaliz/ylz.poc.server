@@ -1,6 +1,7 @@
 const Invoice = require('../models/Invoice');
 const logger = require('../libs/logger');
-
+const usersRepo = require('./users');
+const customersRepo = require('./customers');
 
 exports.getCount = function() {
    return Invoice.count({});
@@ -10,6 +11,25 @@ exports.getById = function(invoiceId) {
 }
 exports.getByCustomerId = function(customerId) {
    return Invoice.find({ customerId });
+}
+
+
+exports.getAll = async function() {
+   const users = await usersRepo.getAll(),
+      customers = await customersRepo.getAll(),
+      invoices = await Invoice.find();
+
+   return invoices.map(invoice => {
+      return {
+         ...invoice.toObject(),
+         customerName: ((customer) => {
+            return `${customer.firstName} ${customer.lastName}`
+         })(customers.find(customer => customer.id === invoice.customerId)),
+         staffName: ((user) => {
+            return `${user.firstName} ${user.lastName}`
+         })(users.find(user => user.id === invoice.staffId))
+      }
+   });
 }
 
 exports.insert = function(invoice, userId) {

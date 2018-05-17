@@ -1,7 +1,7 @@
 const express = require('express');
 const logger = require('../libs/logger');
 const { HttpStatusCode } = require('../libs/constants');
-const customersRepo = require('../repositories/customers');
+const invoicesRepo = require('../repositories/invoices');
 
 
 exports.router = express.Router()

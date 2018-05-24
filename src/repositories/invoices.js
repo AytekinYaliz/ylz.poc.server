@@ -9,25 +9,24 @@ exports.getCount = function() {
 exports.getById = function(invoiceId) {
    return Invoice.findById(invoiceId);
 }
+exports.getAll = function() {
+   return Invoice.find();
+}
 exports.getByCustomerId = function(customerId) {
    return Invoice.find({ customerId });
 }
 
 
-exports.getAll = async function() {
+exports.getList = async function() {
    const users = await usersRepo.getAll(),
       customers = await customersRepo.getAll(),
-      invoices = await Invoice.find();
+      invoices = await this.getAll().sort({ 'number': -1 });
 
    return invoices.map(invoice => {
       return {
          ...invoice.toObject(),
-         customerName: ((customer) => {
-            return `${customer.firstName} ${customer.lastName}`
-         })(customers.find(customer => customer.id === invoice.customerId)),
-         staffName: ((user) => {
-            return `${user.firstName} ${user.lastName}`
-         })(users.find(user => user.id === invoice.staffId))
+         customerName: getName(customers.find(customer => customer.id === invoice.customerId)),
+         staffName: getName(users.find(user => user.id === invoice.staffId))
       }
    });
 }
@@ -66,4 +65,8 @@ exports.getMaxNumber = async function() {
             reject(err);
          });
    });
+}
+
+function getName(entity) {
+   return `${entity.firstName} ${entity.lastName}`
 }

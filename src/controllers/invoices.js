@@ -16,7 +16,7 @@ exports.router = express.Router()
  */
 async function getAll(req, res, next) {
    try {
-      res.json(await invoicesRepo.getAll());
+      res.json(await invoicesRepo.getList());
    } catch(err) {
       logger.error(err);
       return next(err);

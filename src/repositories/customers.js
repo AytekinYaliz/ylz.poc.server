@@ -8,8 +8,13 @@ exports.getCount = function() {
 exports.getById = function(customerId) {
    return Customer.findById(customerId);
 }
-exports.getAll = function() {
-   return Customer.find();
+exports.getAll = function(query) {
+   return Customer.find(query);
+}
+
+
+exports.getList = async function() {
+   return this.getAll({ 'isDeleted': false }).sort({ 'firstName': 1, 'lastName': 1 });
 }
 
 exports.insert = function(customer, userId) {

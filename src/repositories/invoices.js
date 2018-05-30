@@ -3,14 +3,15 @@ const logger = require('../libs/logger');
 const usersRepo = require('./users');
 const customersRepo = require('./customers');
 
+
 exports.getCount = function() {
    return Invoice.count({});
 }
 exports.getById = function(invoiceId) {
    return Invoice.findById(invoiceId);
 }
-exports.getAll = function() {
-   return Invoice.find();
+exports.getAll = function(query) {
+   return Invoice.find(query);
 }
 exports.getByCustomerId = function(customerId) {
    return Invoice.find({ customerId });
@@ -20,7 +21,7 @@ exports.getByCustomerId = function(customerId) {
 exports.getList = async function() {
    const users = await usersRepo.getAll(),
       customers = await customersRepo.getAll(),
-      invoices = await this.getAll().sort({ 'number': -1 });
+      invoices = await this.getAll({}).sort({ 'number': -1 });
 
    return invoices.map(invoice => {
       return {
@@ -57,7 +58,6 @@ exports.getMaxNumber = async function() {
          .find()
          .sort({ 'number': -1 })
          .limit(1)
-         // .exec()
          .then(invoices => {
             resolve(invoices.length ? invoices[0].number : 0);
          })

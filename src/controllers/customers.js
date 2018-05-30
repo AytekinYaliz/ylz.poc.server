@@ -21,7 +21,7 @@ exports.router = express.Router()
  */
 async function getAll(req, res, next) {
    try {
-      const customers = await customersRepo.getAll();
+      const customers = await customersRepo.getList();
 
       return res.json(customers);
    } catch(err) {

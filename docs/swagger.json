@@ -1,0 +1,122 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "LH ",
+    "version": "v1"
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/login": {
+      "post": {
+        "operationId": "login",
+        "summary": "Logs into server",
+        "tags": [
+          "login"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "clientId",
+            "description": "Client ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "userId",
+            "description": "User ID",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "type": "string",
+                  "description": "User ID"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "examples": {
+              "application/json": "{\n  \"IsAuthenticated\": true,\n  \"AccessToken\": \"string\", \n  \"AuthenticationStatus\":1  \n}"
+            }
+          }
+        }
+      }
+    },
+    "/api/authenticate": {
+      "post": {
+        "operationId": "syncData",
+        "summary": "Logs in and syncs data",
+        "tags": [
+          "authenticate"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "examples": {
+              "application/json": ""
+            }
+          }
+        }
+      }
+    },
+    "/api/me": {
+      "get": {
+        "operationId": "get",
+        "summary": "Gets my profile",
+        "tags": [
+          "me"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 OK",
+            "examples": {
+              "application/json": "{\n  \t\"isAdmin\": true \n}"
+            }
+          }
+        }
+      }
+    },
+  },
+  "definitions": {
+    "Post_Login_Input": {
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name"
+        },
+        "id": {
+          "type": "string",
+          "description": "ID"
+        }
+      }
+    },
+    "Post_Login_Output": {
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name"
+        },
+        "id": {
+          "type": "string",
+          "description": "ID"
+        }
+      }
+    }
+  }
+}

@@ -1,5 +1,5 @@
-const request = require('supertest');
 const assert = require('assert');
+const request = require('supertest');
 const chai = require('chai');
 const app = require('./src/app');
 
@@ -23,7 +23,7 @@ describe('GET /cities', () => {
 
   it('Test w/ supertest', (done) => {
     request(app)
-      .get('/cities')
+      .get('/api/cities')
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .expect(200)

@@ -1,5 +1,5 @@
 const express = require('express');
-const morgan = require('morgan');
+const morganBody = require('morgan-body');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -32,11 +32,7 @@ app.use(cors({
    // credentials: true,
    optionsSuccessStatus: 200
 }));
-if (nodeEnv === DeploymentType.local || nodeEnv === DeploymentType.test) {
-   app.use(morgan('dev'));
-} else {
-   app.use(morgan('combined'));
-}
+morganBody(app);
 
 /**
  * Controllers

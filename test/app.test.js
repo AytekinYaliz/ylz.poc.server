@@ -20,15 +20,16 @@ describe("GET /cities", () => {
       done();
    });
 
-   it("Test w/ chai.request", () => {
-      return chai
+   it("Test w/ chai.request", done => {
+      chai
          .request(app)
          .get("/api/cities")
-         .then(res => {
+         .end((err, res) => {
             expect(res.status).to.equal(200);
             expect(res).to.be.json;
             expect(res.body).to.be.an("array");
             expect(res.body).to.have.length(5);
+            done();
          });
    });
 
@@ -38,7 +39,7 @@ describe("GET /cities", () => {
          .set("Accept", "application/json")
          .expect("Content-Type", /json/)
          .expect(200)
-         .end(function(err, res) {
+         .end((err, res) => {
             if (err) return done(err);
             done();
          });

@@ -4,6 +4,7 @@ const chai = require("chai");
 const chaiHttp = require('chai-http');
 
 const app = require("./src/app");
+chai.use(chaiHttp);
 
 before(() => {
    console.log("Once for the file");
@@ -23,11 +24,10 @@ describe("GET /cities", () => {
    });
 
    it("Test w/ chai.request", done => {
-      chai.use(chaiHttp);
-      
       chai
          .request(app)
-         .get("/api/cities")
+         .get("/api/cities/2")
+         .send({ name: 'test' })    // npm i -S body-parser
          .end((err, res) => {
             expect(res.status).to.equal(200);
             expect(res).to.be.json;
@@ -41,6 +41,7 @@ describe("GET /cities", () => {
       request(app)
          .get("/api/cities")
          .set("Accept", "application/json")
+         .send({ name: 'test' })    // npm i -S body-parser
          .expect("Content-Type", /json/)
          .expect(200)
          .end((err, res) => {

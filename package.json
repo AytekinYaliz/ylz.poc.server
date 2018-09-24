@@ -7,8 +7,8 @@
     "publish": "node src/index.js",
     "publish-local": "cross-env NODE_ENV=local npm run publish",
     "publish-dev": "cross-env NODE_ENV=dev npm run publish",
-    "test": "mocha",
-    "test:w": "mocha -w"
+    "test": "mocha test/**/*.js",
+    "test:w": "npm test -- -w"
   },
   "dependencies": {
     "bcrypt": "1.0.3",

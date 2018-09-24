@@ -1,6 +1,8 @@
 const assert = require("assert");
 const request = require("supertest");
 const chai = require("chai");
+const chaiHttp = require('chai-http');
+
 const app = require("./src/app");
 
 before(() => {
@@ -21,6 +23,8 @@ describe("GET /cities", () => {
    });
 
    it("Test w/ chai.request", done => {
+      chai.use(chaiHttp);
+      
       chai
          .request(app)
          .get("/api/cities")

@@ -1,4 +1,4 @@
-// stick w/ a single assetion library
+// stick w/ a single assertion library
 const request = require("supertest");
 const chai = require("chai");
 const chaiHttp = require('chai-http');

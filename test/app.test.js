@@ -4,6 +4,8 @@ const chai = require("chai");
 const chaiHttp = require('chai-http');
 
 const app = require("./src/app");
+
+const { expect } = chai;
 chai.use(chaiHttp);
 
 before(() => {
@@ -15,7 +17,7 @@ beforeEach(() => {
 
 describe("GET /cities", () => {
    it("Test w/ chai.expect", () => {
-      chai.expect(2).to.not.equal(1);
+      expect(2).to.not.equal(1);
    });
 
    it("Test w/ chai.request", done => {
@@ -24,10 +26,10 @@ describe("GET /cities", () => {
          .get("/api/cities/2")
          .send({ name: 'test' })    // npm i -S body-parser
          .end((err, res) => {
-            chai.expect(res.status).to.equal(200);
-            chai.expect(res).to.be.json;
-            chai.expect(res.body).to.be.an("array");
-            chai.expect(res.body).to.have.length(5);
+            expect(res.status).to.equal(200);
+            expect(res).to.be.json;
+            expect(res.body).to.be.an("array");
+            expect(res.body).to.have.length(5);
             done();
          });
    });

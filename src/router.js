@@ -1,5 +1,4 @@
-const passport = require('passport');
-const passportService = require('./services/passport');
+const passport = require('passport'); 
 
 const authenticationController = require('./controllers/authentication');
 const customersController = require('./controllers/customers');

@@ -1,4 +1,5 @@
 const passport = require('passport'); 
+const passportService = require('./services/passport'); // this will add the middleware
 
 const authenticationController = require('./controllers/authentication');
 const customersController = require('./controllers/customers');
